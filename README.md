@@ -31,8 +31,13 @@ The email variant adds a 6th, optional "anything that stuck with you?" — the P
   `#02051B`, white ink, electric cyan `#00EFFA` ("AI") as the single interactive accent
   (selection + CTA), lime green `#75F97F` (the X highlight) reserved for positive/success
   moments (the thank-you). Cyan CTA carries dark navy text for high contrast.
-- **Real logo in the header.** `assets/aixcitement-logo.png` replaces the placeholder
-  lobster wordmark; the logo is built for a dark background, which is why the surface is navy.
+- **Real logo in the header, inlined as SVG.** The wordmark is inlined directly in the
+  markup (vector `assets/aixcitement-logo.svg` is also in the repo). Inlined rather than
+  `<img src>` because external SVGs loaded via `<img>` often fail to pull the Bricolage
+  Grotesque webfont, silently falling back and breaking the wordmark — the font is loaded
+  via Google Fonts in `<head>`. Crisp on a projector. The logo is built for a dark
+  background, which is why the surface is navy. `aixcitement-logo.png` is kept as the
+  email-safe raster (see Sam note below).
 - **Anonymous by default.** Email is hidden until the attendee opts in. No accounts,
   no tracking — matches PRD scope.
 - **Phone-first, big targets.** 52px minimum tap targets, 16px inputs (no iOS zoom),
@@ -46,9 +51,15 @@ The email variant adds a 6th, optional "anything that stuck with you?" — the P
 - The conditional email reveal uses a few lines of JS. **Email clients strip `<script>`**,
   so in `email.html` it degrades to "email always visible, optional" when JS is off — fine,
   but worth knowing.
+- **Inline SVG renders in a browser preview but most email clients (Gmail, Outlook) strip
+  or ignore it.** For the *actual sent email*, swap the inline SVG for the hosted
+  `aixcitement-logo.png` (raster, email-safe) — it's left in `assets/` for exactly this.
+  The inline SVG is the right call for the web app (`index.html`); the PNG is the right
+  call for the real email send.
 - Retheme via the tokens at the top of `styles.css` — no need to touch markup.
 
 ## Open questions for Bram
-- The logo PNG is raster; for crisp rendering on big screens an SVG would be better if you have one.
-- A stray lobster 🦞 still appears in the "Send it" button + thank-you. Keep it as a wink, or drop it now the logo carries the brand?
-- Emoji rating (😴→🤩) vs. plain numbers/stars — emoji fits the tone but is less neutral.
+- ~~Logo SVG~~ — resolved: SVG supplied and inlined. ✓
+- ~~Lobster wink in CTA + thank-you~~ — resolved: keep it. ✓
+- ~~Emoji rating vs. numbers/stars~~ — resolved: keep emoji. ✓
+- No open design questions — ready for Sam.

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="thesvg" xmlns="http://www.w3.org/2000/svg" viewBox="-4 -55 1676 426" font-family="'Bricolage Grotesque', system-ui, sans-serif" data-om-id="a7fa147e:9" style="width: 980px;">
+      <defs data-om-id="a7fa147e:10">
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&amp;display=swap');
+          .ai   { fill: #19e0f5; }
+          .tail { fill: #ffffff; }
+          .xch  { fill: #0a0f22; }
+          .lg   { font-weight: 800; font-size: 300px; letter-spacing: -14px; }
+        </style>
+      </defs>
+      <text class="ai lg" x="20" y="258" data-om-id="a7fa147e:11">AI</text>
+      <g transform="rotate(-5 430 180)" data-om-id="a7fa147e:12">
+        <rect x="320" y="40" width="225" height="280" rx="30" fill="#7ef07e" data-om-id="a7fa147e:13"></rect>
+        <text class="xch" x="345" y="258" font-weight="800" font-size="300" data-om-id="a7fa147e:14">X</text>
+      </g>
+      <text class="tail lg" x="555" y="258" data-om-id="a7fa147e:15">citement</text>
+    </svg>
