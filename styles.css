@@ -3,29 +3,37 @@
    Design tokens + shared styles for during-event + email variants.
 
    Design intent (Lin):
-   - Warm café tone matching the Luma event page. Cream paper, black ink,
-     one warm "lobster" coral accent. Clean white card on a warm ground.
-   - Grassroots / "spit and duct tape welcome" energy — friendly, a little
-     playful, never corporate. Lobster 🦞 is the recognisable motif.
+   - Palette pulled straight from the AIxcitement logo + announcement page:
+     deep near-black navy ground, electric cyan + lime green accents, white
+     ink. Dark, high-energy, unmistakably "this event".
+   - Brand colours from the logo PNG: cyan #00EFFA ("AI"), lime #75F97F
+     (the X highlight), navy #02051B (the X / ground), white "citement".
+   - Cyan is the single interactive accent (selection + primary CTA).
+     Lime green is reserved for positive / success moments (thank-you).
    - Phone-first, single screen, sub-30-second completion. Big tap targets.
+   - Grassroots energy kept in the microcopy; a stray lobster 🦞 survives as
+     a wink, but the logo now carries the brand.
    ========================================================================= */
 
 :root {
-  /* --- Palette (warm café) --- */
-  --paper:        #FBF6EF;   /* warm cream page background            */
-  --card:         #FFFFFF;   /* clean white form card                */
-  --ink:          #1A1714;   /* near-black warm type                 */
-  --ink-soft:     #6B6258;   /* muted secondary text                 */
-  --line:         #ECE3D7;   /* hairline borders on cream            */
-  --line-strong:  #DCD0BF;
+  /* --- Palette (dark / announcement page) --- */
+  --bg:           #02051B;   /* deep near-black navy ground            */
+  --bg-glow:      #0A1140;   /* subtle top glow                        */
+  --card:         #0B1030;   /* lifted form surface                    */
+  --surface:      rgba(255,255,255,0.045); /* inputs / unselected tiles */
+  --ink:          #FFFFFF;   /* primary white type                     */
+  --ink-soft:     #9DA3C9;   /* muted secondary text (cool grey)       */
+  --line:         rgba(255,255,255,0.12);  /* hairline borders         */
+  --line-strong:  rgba(255,255,255,0.22);
 
-  /* Lobster coral — the single accent. Used for selection + primary CTA. */
-  --coral:        #E8553A;
-  --coral-deep:   #C8432B;   /* hover / pressed                      */
-  --coral-tint:   #FCEDE7;   /* selected-state fill                  */
+  /* Electric cyan — the single interactive accent (selection + CTA). */
+  --cyan:         #00EFFA;
+  --cyan-deep:    #00C7D2;   /* hover / pressed                        */
+  --cyan-tint:    rgba(0,239,250,0.14);  /* selected-state fill        */
 
-  /* Feedback */
-  --good:         #2E7D5B;
+  /* Lime green — positive / success only. */
+  --green:        #75F97F;
+  --green-tint:   rgba(117,249,127,0.14);
 
   /* --- Type --- */
   --font: "Söhne", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -34,7 +42,7 @@
   /* --- Geometry --- */
   --radius:       16px;
   --radius-sm:    12px;
-  --tap:          52px;      /* minimum comfortable tap target       */
+  --tap:          52px;      /* minimum comfortable tap target          */
   --maxw:         460px;
 }
 
@@ -43,7 +51,11 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--paper);
+  background: var(--bg);
+  /* faint cyan/navy glow behind the card, fading to flat navy */
+  background-image:
+    radial-gradient(120% 60% at 50% -10%, var(--bg-glow) 0%, var(--bg) 60%);
+  background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
@@ -61,17 +73,20 @@ html, body {
   text-align: center;
   margin: 8px 0 20px;
 }
-.brand .lobster {
-  font-size: 40px;
-  line-height: 1;
-  display: inline-block;
-  transform: rotate(-8deg);
+.brand .logo {
+  display: block;
+  width: auto;
+  height: 38px;
+  max-width: 78%;
+  margin: 4px auto 16px;
+  object-fit: contain;
 }
 .brand h1 {
   font-size: 22px;
   font-weight: 700;
   letter-spacing: -0.01em;
   margin: 10px 0 4px;
+  color: var(--ink);
 }
 .brand p {
   margin: 0;
@@ -85,7 +100,9 @@ html, body {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 20px 18px 8px;
-  box-shadow: 0 1px 0 rgba(26,23,20,0.02), 0 12px 30px -18px rgba(26,23,20,0.25);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.04) inset,
+    0 24px 50px -28px rgba(0,0,0,0.8);
 }
 
 /* ---- Question block ---- */
@@ -96,13 +113,14 @@ html, body {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 12px;
+  color: var(--ink);
 }
 .q .hint {
   font-weight: 400;
   color: var(--ink-soft);
   font-size: 13px;
 }
-.req { color: var(--coral); font-weight: 700; }
+.req { color: var(--cyan); font-weight: 700; }
 
 /* ---- Rating (emoji scale 1–5) ---- */
 .rating {
@@ -123,16 +141,17 @@ html, body {
   border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: 22px;
-  background: #fff;
+  background: var(--surface);
   transition: transform .08s ease, border-color .12s ease, background .12s ease;
 }
 .rating label .n { font-size: 11px; color: var(--ink-soft); font-weight: 600; }
 .rating label:active { transform: scale(0.96); }
 .rating input:checked + label {
-  border-color: var(--coral);
-  background: var(--coral-tint);
-  box-shadow: inset 0 0 0 1px var(--coral);
+  border-color: var(--cyan);
+  background: var(--cyan-tint);
+  box-shadow: inset 0 0 0 1px var(--cyan);
 }
+.rating input:checked + label .n { color: var(--cyan); }
 
 /* ---- Segmented choice (Yes / Maybe / No) ---- */
 .segmented {
@@ -152,14 +171,15 @@ html, body {
   cursor: pointer;
   font-weight: 600;
   font-size: 15px;
-  background: #fff;
+  color: var(--ink);
+  background: var(--surface);
   transition: border-color .12s ease, background .12s ease;
 }
 .segmented label:active { transform: scale(0.98); }
 .segmented input:checked + label {
-  border-color: var(--coral);
-  background: var(--coral-tint);
-  box-shadow: inset 0 0 0 1px var(--coral);
+  border-color: var(--cyan);
+  background: var(--cyan-tint);
+  box-shadow: inset 0 0 0 1px var(--cyan);
 }
 
 /* ---- Open text ---- */
@@ -173,13 +193,13 @@ textarea {
   padding: 12px 14px;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
-  background: #fff;
+  background: var(--surface);
 }
-textarea::placeholder { color: #B5AC9F; }
+textarea::placeholder { color: #6E749B; }
 textarea:focus, input[type="email"]:focus {
   outline: none;
-  border-color: var(--coral);
-  box-shadow: 0 0 0 3px var(--coral-tint);
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px var(--cyan-tint);
 }
 
 /* ---- Checkboxes (opt-in help) ---- */
@@ -195,13 +215,14 @@ textarea:focus, input[type="email"]:focus {
   cursor: pointer;
   font-size: 15px;
   font-weight: 500;
-  background: #fff;
+  color: var(--ink);
+  background: var(--surface);
   transition: border-color .12s ease, background .12s ease;
 }
-.check input { width: 20px; height: 20px; accent-color: var(--coral); margin: 0; }
+.check input { width: 20px; height: 20px; accent-color: var(--cyan); margin: 0; }
 .check:has(input:checked) {
-  border-color: var(--coral);
-  background: var(--coral-tint);
+  border-color: var(--cyan);
+  background: var(--cyan-tint);
 }
 
 /* ---- Conditional email reveal ---- */
@@ -221,9 +242,10 @@ input[type="email"] {
   padding: 0 14px;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
-  background: #fff;
+  background: var(--surface);
   color: var(--ink);
 }
+input[type="email"]::placeholder { color: #6E749B; }
 
 /* ---- Submit ---- */
 .submit-zone { padding: 8px 0 4px; }
@@ -232,16 +254,18 @@ button.submit {
   min-height: 54px;
   border: 0;
   border-radius: var(--radius-sm);
-  background: var(--coral);
-  color: #fff;
+  background: var(--cyan);
+  color: #02051B;          /* dark navy on bright cyan — high contrast */
   font-family: inherit;
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.01em;
   cursor: pointer;
-  transition: background .12s ease, transform .08s ease;
+  box-shadow: 0 10px 26px -10px rgba(0,239,250,0.55);
+  transition: background .12s ease, transform .08s ease, box-shadow .12s ease;
 }
-button.submit:hover { background: var(--coral-deep); }
-button.submit:active { transform: translateY(1px); }
+button.submit:hover { background: var(--cyan-deep); }
+button.submit:active { transform: translateY(1px); box-shadow: 0 6px 16px -10px rgba(0,239,250,0.5); }
 .privacy {
   text-align: center;
   color: var(--ink-soft);
@@ -260,14 +284,14 @@ button.submit:active { transform: translateY(1px); }
 /* ---- Thank-you state ---- */
 .thanks { text-align: center; padding: 28px 18px; }
 .thanks .lobster { font-size: 52px; display: inline-block; transform: rotate(-8deg); }
-.thanks h2 { font-size: 22px; margin: 14px 0 6px; }
+.thanks h2 { font-size: 22px; margin: 14px 0 6px; color: var(--green); }
 .thanks p { color: var(--ink-soft); margin: 0; }
 .hidden { display: none; }
 
 /* =========================================================================
    Email variant tweaks (.email-doc) — rendered inside an email client,
    so: table-safe spacing, no sticky anything, past-tense framing,
-   one extra open question. Slightly wider, lighter.
+   one extra open question. Slightly wider.
    ========================================================================= */
 .email-doc .wrap { max-width: 520px; }
 .email-doc .preheader { /* hidden inbox preview text */
@@ -275,9 +299,9 @@ button.submit:active { transform: translateY(1px); }
 }
 .email-doc .brand h1 { font-size: 20px; }
 .email-doc .ribbon {
-  background: var(--coral-tint);
-  border: 1px solid #F3D6CC;
-  color: var(--coral-deep);
+  background: var(--cyan-tint);
+  border: 1px solid rgba(0,239,250,0.35);
+  color: var(--cyan);
   font-size: 13px;
   font-weight: 600;
   text-align: center;

@@ -2,8 +2,9 @@
 
 HTML/CSS mockups for the meetup feedback capture, per the PRD
 *PRD: Meetup Feedback Capture* (Dave, 2026-06-24).
-Branding pulled from the Luma event page: *Share Your AIxcitement — Open Source
-AI Show & Tell* 🦞 (Oproer Biercafé, Utrecht · hosts Bram & Henk).
+Branding pulled from the AIxcitement logo + announcement page: *Share Your
+AIxcitement — Open Source AI Show & Tell* (Oproer Biercafé, Utrecht · hosts
+Bram & Henk). The official logo lives at `assets/aixcitement-logo.png`.
 
 ## Files
 | File | What it is |
@@ -26,9 +27,12 @@ The email variant adds a 6th, optional "anything that stuck with you?" — the P
 "more time, so ask a bit more" note. Nothing else differs.
 
 ## Design decisions
-- **Warm café palette, one accent.** Cream paper `#FBF6EF`, near-black ink, a single
-  lobster-coral `#E8553A` for selection + the CTA. Matches the Luma page's casual,
-  grassroots tone — friendly, not corporate.
+- **Dark announcement-page palette, colours straight from the logo.** Deep navy ground
+  `#02051B`, white ink, electric cyan `#00EFFA` ("AI") as the single interactive accent
+  (selection + CTA), lime green `#75F97F` (the X highlight) reserved for positive/success
+  moments (the thank-you). Cyan CTA carries dark navy text for high contrast.
+- **Real logo in the header.** `assets/aixcitement-logo.png` replaces the placeholder
+  lobster wordmark; the logo is built for a dark background, which is why the surface is navy.
 - **Anonymous by default.** Email is hidden until the attendee opts in. No accounts,
   no tracking — matches PRD scope.
 - **Phone-first, big targets.** 52px minimum tap targets, 16px inputs (no iOS zoom),
@@ -45,5 +49,6 @@ The email variant adds a 6th, optional "anything that stuck with you?" — the P
 - Retheme via the tokens at the top of `styles.css` — no need to touch markup.
 
 ## Open questions for Bram
-- Lobster as the only motif, or want the actual event cover image / a wordmark in the header?
+- The logo PNG is raster; for crisp rendering on big screens an SVG would be better if you have one.
+- A stray lobster 🦞 still appears in the "Send it" button + thank-you. Keep it as a wink, or drop it now the logo carries the brand?
 - Emoji rating (😴→🤩) vs. plain numbers/stars — emoji fits the tone but is less neutral.
