@@ -4,13 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>How was AIxcitement? 🦞</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&display=swap" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="email-doc">
   <!--
     POST-EVENT EMAIL VARIANT
     Same five fields, past-tense framing, plus ONE extra open question
-    ("anything that stuck with you?") since people have more time here.
+    ("any talk that stuck with you, and why?") — the speaker-feedback
+    channel, email-only since people have more time here.
     Same surface reused — do NOT make this a second form's worth of work.
     Note for Sam: real email clients strip <script>; the conditional email
     reveal degrades to "always visible, optional" when JS is unavailable.
@@ -19,7 +23,22 @@
 
   <main class="wrap">
     <header class="brand">
-      <span class="lobster">🦞</span>
+      <svg class="logo" viewBox="-4 -55 1676 426" role="img" aria-label="AIxcitement" xmlns="http://www.w3.org/2000/svg" font-family="'Bricolage Grotesque', system-ui, sans-serif">
+        <defs>
+          <style>
+            .ai   { fill: #19e0f5; }
+            .tail { fill: #ffffff; }
+            .xch  { fill: #0a0f22; }
+            .lg   { font-weight: 800; font-size: 300px; letter-spacing: -14px; }
+          </style>
+        </defs>
+        <text class="ai lg" x="20" y="258">AI</text>
+        <g transform="rotate(-5 430 180)">
+          <rect x="320" y="40" width="225" height="280" rx="30" fill="#7ef07e"></rect>
+          <text class="xch" x="345" y="258" font-weight="800" font-size="300">X</text>
+        </g>
+        <text class="tail lg" x="555" y="258">citement</text>
+      </svg>
       <h1>So… how was AIxcitement?</h1>
       <p>Thanks for coming to the first one. A few questions, then we'll leave you alone.</p>
     </header>
@@ -67,14 +86,16 @@
           placeholder="Venue, talks, timing, format — whatever stood out."></textarea>
       </div>
 
-      <!-- EXTRA Q (email only) — the "more time" question -->
+      <!-- EXTRA Q (email only) — speaker-feedback channel, see PRD "Speaker & venue feedback" decision.
+           Deliberately one open question, NOT a per-speaker rating grid: surfaces standouts
+           without taxing completion or asking people to score speakers to their face. -->
       <div class="q">
         <label class="label" for="stuck">
-          Anything that stuck with you?
-          <span class="hint">— optional. A talk, an idea, a person you met.</span>
+          Any talk that stuck with you, and why?
+          <span class="hint">— optional. Name a speaker or an idea — it helps us know who to bring back.</span>
         </label>
         <textarea id="stuck" name="stuck"
-          placeholder="The thing you were still thinking about this morning."></textarea>
+          placeholder="The talk or idea you were still thinking about this morning."></textarea>
       </div>
 
       <!-- Q4 — opt-in help (optional) -->
