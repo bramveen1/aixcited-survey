@@ -1,0 +1,288 @@
+/* =========================================================================
+   AIxcitement — Feedback survey mockups
+   Design tokens + shared styles for during-event + email variants.
+
+   Design intent (Lin):
+   - Warm café tone matching the Luma event page. Cream paper, black ink,
+     one warm "lobster" coral accent. Clean white card on a warm ground.
+   - Grassroots / "spit and duct tape welcome" energy — friendly, a little
+     playful, never corporate. Lobster 🦞 is the recognisable motif.
+   - Phone-first, single screen, sub-30-second completion. Big tap targets.
+   ========================================================================= */
+
+:root {
+  /* --- Palette (warm café) --- */
+  --paper:        #FBF6EF;   /* warm cream page background            */
+  --card:         #FFFFFF;   /* clean white form card                */
+  --ink:          #1A1714;   /* near-black warm type                 */
+  --ink-soft:     #6B6258;   /* muted secondary text                 */
+  --line:         #ECE3D7;   /* hairline borders on cream            */
+  --line-strong:  #DCD0BF;
+
+  /* Lobster coral — the single accent. Used for selection + primary CTA. */
+  --coral:        #E8553A;
+  --coral-deep:   #C8432B;   /* hover / pressed                      */
+  --coral-tint:   #FCEDE7;   /* selected-state fill                  */
+
+  /* Feedback */
+  --good:         #2E7D5B;
+
+  /* --- Type --- */
+  --font: "Söhne", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Helvetica, Arial, sans-serif;
+
+  /* --- Geometry --- */
+  --radius:       16px;
+  --radius-sm:    12px;
+  --tap:          52px;      /* minimum comfortable tap target       */
+  --maxw:         460px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.45;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 24px 18px 40px;
+}
+
+/* ---- Header / brand ---- */
+.brand {
+  text-align: center;
+  margin: 8px 0 20px;
+}
+.brand .lobster {
+  font-size: 40px;
+  line-height: 1;
+  display: inline-block;
+  transform: rotate(-8deg);
+}
+.brand h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 10px 0 4px;
+}
+.brand p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+
+/* ---- Card ---- */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 18px 8px;
+  box-shadow: 0 1px 0 rgba(26,23,20,0.02), 0 12px 30px -18px rgba(26,23,20,0.25);
+}
+
+/* ---- Question block ---- */
+.q { padding: 14px 0 18px; border-top: 1px solid var(--line); }
+.q:first-of-type { border-top: 0; }
+.q .label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.q .hint {
+  font-weight: 400;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+.req { color: var(--coral); font-weight: 700; }
+
+/* ---- Rating (emoji scale 1–5) ---- */
+.rating {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.rating input { position: absolute; opacity: 0; pointer-events: none; }
+.rating label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: var(--tap);
+  padding: 8px 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 22px;
+  background: #fff;
+  transition: transform .08s ease, border-color .12s ease, background .12s ease;
+}
+.rating label .n { font-size: 11px; color: var(--ink-soft); font-weight: 600; }
+.rating label:active { transform: scale(0.96); }
+.rating input:checked + label {
+  border-color: var(--coral);
+  background: var(--coral-tint);
+  box-shadow: inset 0 0 0 1px var(--coral);
+}
+
+/* ---- Segmented choice (Yes / Maybe / No) ---- */
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.segmented input { position: absolute; opacity: 0; pointer-events: none; }
+.segmented label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: var(--tap);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  background: #fff;
+  transition: border-color .12s ease, background .12s ease;
+}
+.segmented label:active { transform: scale(0.98); }
+.segmented input:checked + label {
+  border-color: var(--coral);
+  background: var(--coral-tint);
+  box-shadow: inset 0 0 0 1px var(--coral);
+}
+
+/* ---- Open text ---- */
+textarea {
+  width: 100%;
+  min-height: 88px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: 16px;        /* 16px avoids iOS zoom-on-focus */
+  color: var(--ink);
+  padding: 12px 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: #fff;
+}
+textarea::placeholder { color: #B5AC9F; }
+textarea:focus, input[type="email"]:focus {
+  outline: none;
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px var(--coral-tint);
+}
+
+/* ---- Checkboxes (opt-in help) ---- */
+.checks { display: flex; flex-direction: column; gap: 8px; }
+.check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--tap);
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  background: #fff;
+  transition: border-color .12s ease, background .12s ease;
+}
+.check input { width: 20px; height: 20px; accent-color: var(--coral); margin: 0; }
+.check:has(input:checked) {
+  border-color: var(--coral);
+  background: var(--coral-tint);
+}
+
+/* ---- Conditional email reveal ---- */
+.email-row {
+  margin-top: 10px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height .25s ease, opacity .2s ease, margin .2s ease;
+}
+.email-row.show { max-height: 120px; opacity: 1; margin-top: 12px; }
+input[type="email"] {
+  width: 100%;
+  min-height: var(--tap);
+  font-family: inherit;
+  font-size: 16px;
+  padding: 0 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  color: var(--ink);
+}
+
+/* ---- Submit ---- */
+.submit-zone { padding: 8px 0 4px; }
+button.submit {
+  width: 100%;
+  min-height: 54px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--coral);
+  color: #fff;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .12s ease, transform .08s ease;
+}
+button.submit:hover { background: var(--coral-deep); }
+button.submit:active { transform: translateY(1px); }
+.privacy {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  margin: 12px 0 0;
+}
+
+/* ---- Footer ---- */
+.foot {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  margin-top: 22px;
+}
+
+/* ---- Thank-you state ---- */
+.thanks { text-align: center; padding: 28px 18px; }
+.thanks .lobster { font-size: 52px; display: inline-block; transform: rotate(-8deg); }
+.thanks h2 { font-size: 22px; margin: 14px 0 6px; }
+.thanks p { color: var(--ink-soft); margin: 0; }
+.hidden { display: none; }
+
+/* =========================================================================
+   Email variant tweaks (.email-doc) — rendered inside an email client,
+   so: table-safe spacing, no sticky anything, past-tense framing,
+   one extra open question. Slightly wider, lighter.
+   ========================================================================= */
+.email-doc .wrap { max-width: 520px; }
+.email-doc .preheader { /* hidden inbox preview text */
+  display: none; max-height: 0; overflow: hidden;
+}
+.email-doc .brand h1 { font-size: 20px; }
+.email-doc .ribbon {
+  background: var(--coral-tint);
+  border: 1px solid #F3D6CC;
+  color: var(--coral-deep);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  margin: 0 auto 16px;
+  max-width: max-content;
+}
