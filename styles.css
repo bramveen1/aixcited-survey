@@ -287,6 +287,8 @@ button.submit:active { transform: translateY(1px); box-shadow: 0 6px 16px -10px 
 .thanks h2 { font-size: 22px; margin: 14px 0 6px; color: var(--green); }
 .thanks p { color: var(--ink-soft); margin: 0; }
 .hidden { display: none; }
+/* Honeypot — off-screen for humans, still in the DOM for bots to take the bait. */
+.hp { position: absolute; left: -5000px; width: 1px; height: 1px; overflow: hidden; }
 
 /* =========================================================================
    Email variant tweaks (.email-doc) — rendered inside an email client,

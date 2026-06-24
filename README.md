@@ -13,8 +13,12 @@ Bram & Henk). The official logo lives at `assets/aixcitement-logo.png`.
 | `email.html` | **Post-event email** variant. Same fields, past-tense, one extra optional question. |
 | `styles.css` | Shared design tokens + components. Edit tokens at the top to retheme. |
 
-Open either file in a browser. Submit is faked client-side to show the
-thank-you state — there is no backend here.
+Open either file in a browser to preview. The live form (`index.html`) is wired for
+**Netlify Forms** — on submit it does a real AJAX POST to `/`, then shows the thank-you
+state. Capture only happens once deployed on Netlify with Forms enabled; opened as a local
+file it still shows the thank-you (the POST just fails silently). The email variant is
+emailed, not served, so it captures nothing automatically. Append `?event=<slug>` to the
+live form URL to tag each meetup's responses (lands in the `event` CSV column).
 
 ## The five fields (from the PRD)
 1. **Rating** — 1–5 emoji scale (required)

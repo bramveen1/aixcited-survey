@@ -14,8 +14,8 @@
     DURING-EVENT VARIANT
     Shown after a QR scan, on a phone, drink in hand. One screen, no page breaks.
     Five fields from the PRD: rating / do-again / one-change / opt-in help / conditional email.
-    Mockup only — submit is faked client-side to show the thank-you state.
-    Storage + real submit are Sam's call.
+    Wired for Netlify Forms: real AJAX POST to "/" on submit, then the thank-you state.
+    Capture requires deploying on Netlify with Forms enabled. Append ?event=<slug> to tag responses.
   -->
   <main class="wrap">
     <header class="brand">
@@ -39,7 +39,20 @@
       <p>30 seconds, totally anonymous. Be honest — it helps.</p>
     </header>
 
-    <form class="card" id="feedbackForm" onsubmit="return showThanks(event)">
+    <form class="card" id="feedbackForm" name="meetup-feedback" method="POST"
+          data-netlify="true" netlify-honeypot="bot-field"
+          onsubmit="return showThanks(event)">
+
+      <!-- Netlify needs the form name echoed in the POST body for AJAX submits. -->
+      <input type="hidden" name="form-name" value="meetup-feedback" />
+
+      <!-- Which meetup this response belongs to. Populated from ?event=<slug>. -->
+      <input type="hidden" name="event" id="eventField" value="" />
+
+      <!-- Honeypot: hidden from humans, irresistible to bots. Filled = silently dropped by Netlify. -->
+      <p class="hp" aria-hidden="true">
+        <label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+      </p>
 
       <!-- Q1 — overall rating -->
       <div class="q">
@@ -135,12 +148,38 @@
       email.required = any;
       if (!any) email.value = '';
     }
-    // Mockup submit — swap form for thank-you. Real submit is Sam's.
-    function showThanks(e) {
-      e.preventDefault();
+    // Carry the ?event=<slug> through to the hidden field so each meetup's
+    // responses land in their own column in the Netlify CSV.
+    (function setEvent() {
+      var slug = new URLSearchParams(window.location.search).get('event') || '';
+      document.getElementById('eventField').value = slug;
+    })();
+
+    // Reveal the thank-you state and hide the form.
+    function revealThanks() {
       document.getElementById('feedbackForm').classList.add('hidden');
       document.getElementById('thanks').classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Real submit (Option B): AJAX POST to Netlify, then show thanks in place.
+    // url-encodes the whole form — including the checkbox group and hidden fields.
+    function showThanks(e) {
+      e.preventDefault();
+      var form = document.getElementById('feedbackForm');
+      var body = new URLSearchParams(new FormData(form)).toString();
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body
+      })
+        .then(function () { revealThanks(); })
+        .catch(function (err) {
+          // Low-stakes anonymous feedback: don't trap the user on a network blip.
+          // Thank them anyway, but leave a breadcrumb in the console.
+          console.error('Netlify submit failed:', err);
+          revealThanks();
+        });
       return false;
     }
   </script>
