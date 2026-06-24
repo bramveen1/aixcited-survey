@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How was AIxcitement? 🦞</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="email-doc">
+  <!--
+    POST-EVENT EMAIL VARIANT
+    Same five fields, past-tense framing, plus ONE extra open question
+    ("anything that stuck with you?") since people have more time here.
+    Same surface reused — do NOT make this a second form's worth of work.
+    Note for Sam: real email clients strip <script>; the conditional email
+    reveal degrades to "always visible, optional" when JS is unavailable.
+  -->
+  <span class="preheader">Two minutes? Tell us how the first AIxcitement landed.</span>
+
+  <main class="wrap">
+    <header class="brand">
+      <span class="lobster">🦞</span>
+      <h1>So… how was AIxcitement?</h1>
+      <p>Thanks for coming to the first one. A few questions, then we'll leave you alone.</p>
+    </header>
+
+    <div class="ribbon">Couldn't fill it in last night? Here's your chance 👇</div>
+
+    <form class="card" id="feedbackForm" onsubmit="return showThanks(event)">
+
+      <!-- Q1 — overall rating (past tense) -->
+      <div class="q">
+        <label class="label">How was it? <span class="req">*</span></label>
+        <div class="rating">
+          <input type="radio" name="rating" id="r1" value="1" required />
+          <label for="r1">😴<span class="n">1</span></label>
+          <input type="radio" name="rating" id="r2" value="2" />
+          <label for="r2">😐<span class="n">2</span></label>
+          <input type="radio" name="rating" id="r3" value="3" />
+          <label for="r3">🙂<span class="n">3</span></label>
+          <input type="radio" name="rating" id="r4" value="4" />
+          <label for="r4">😄<span class="n">4</span></label>
+          <input type="radio" name="rating" id="r5" value="5" />
+          <label for="r5">🤩<span class="n">5</span></label>
+        </div>
+      </div>
+
+      <!-- Q2 — do it again -->
+      <div class="q">
+        <label class="label">Should we do it again? <span class="req">*</span></label>
+        <div class="segmented">
+          <input type="radio" name="again" id="a-yes" value="yes" required />
+          <label for="a-yes">Yes 🙌</label>
+          <input type="radio" name="again" id="a-maybe" value="maybe" />
+          <label for="a-maybe">Maybe</label>
+          <input type="radio" name="again" id="a-no" value="no" />
+          <label for="a-no">Nah</label>
+        </div>
+      </div>
+
+      <!-- Q3 — one thing to change -->
+      <div class="q">
+        <label class="label" for="change">
+          One thing you'd change for next time? <span class="req">*</span>
+        </label>
+        <textarea id="change" name="change" required
+          placeholder="Venue, talks, timing, format — whatever stood out."></textarea>
+      </div>
+
+      <!-- EXTRA Q (email only) — the "more time" question -->
+      <div class="q">
+        <label class="label" for="stuck">
+          Anything that stuck with you?
+          <span class="hint">— optional. A talk, an idea, a person you met.</span>
+        </label>
+        <textarea id="stuck" name="stuck"
+          placeholder="The thing you were still thinking about this morning."></textarea>
+      </div>
+
+      <!-- Q4 — opt-in help (optional) -->
+      <div class="q">
+        <label class="label">
+          Want in on the next one?
+          <span class="hint">— optional, tick anything that fits.</span>
+        </label>
+        <div class="checks">
+          <label class="check">
+            <input type="checkbox" name="help" value="organise" onchange="toggleEmail()" />
+            I'd help organise 🛠️
+          </label>
+          <label class="check">
+            <input type="checkbox" name="help" value="speak" onchange="toggleEmail()" />
+            I'd like to give a talk 🎤
+          </label>
+          <label class="check">
+            <input type="checkbox" name="help" value="updates" onchange="toggleEmail()" />
+            Just keep me posted ✉️
+          </label>
+        </div>
+
+        <div class="email-row" id="emailRow">
+          <input type="email" name="email" id="email"
+            placeholder="your@email.com — so we can reach you" />
+        </div>
+      </div>
+
+      <div class="submit-zone">
+        <button type="submit" class="submit">Send it 🦞</button>
+        <p class="privacy">Anonymous unless you add your email above.</p>
+      </div>
+    </form>
+
+    <section class="thanks hidden" id="thanks">
+      <span class="lobster">🦞</span>
+      <h2>You're a legend.</h2>
+      <p>Thanks — see you at the next AIxcitement.</p>
+    </section>
+
+    <p class="foot">AIxcitement · Open Source AI Show &amp; Tell · Utrecht</p>
+  </main>
+
+  <script>
+    function toggleEmail() {
+      var any = document.querySelectorAll('input[name="help"]:checked').length > 0;
+      var row = document.getElementById('emailRow');
+      var email = document.getElementById('email');
+      row.classList.toggle('show', any);
+      email.required = any;
+      if (!any) email.value = '';
+    }
+    function showThanks(e) {
+      e.preventDefault();
+      document.getElementById('feedbackForm').classList.add('hidden');
+      document.getElementById('thanks').classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return false;
+    }
+  </script>
+</body>
+</html>
